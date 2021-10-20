@@ -7,7 +7,6 @@ from posts.models import Comment, Post, Group, Follow, User
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(many=False)
-    group = serializers.StringRelatedField(many=False)
 
     class Meta:
         fields = "__all__"
@@ -16,7 +15,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(many=False)
-    post = serializers.SlugRelatedField(slug_field="text", read_only=True)
+    post = serializers.SlugRelatedField(slug_field="id", read_only=True)
 
     class Meta:
         fields = "__all__"
