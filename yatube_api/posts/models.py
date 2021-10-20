@@ -38,6 +38,7 @@ class Comment(models.Model):
 
 class Group(models.Model):
     title = models.CharField(max_length=150)
+    slug = models.SlugField(unique=True)
     description = models.CharField(max_length=300)
 
     def __str__(self) -> str:
