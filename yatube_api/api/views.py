@@ -60,12 +60,9 @@ class FollowViewSet(
     filter_backends = (filters.SearchFilter,)
     search_fields = ("following__username",)
 
-    def _get_user(self):
-        user = get_object_or_404(User, username=self.request.user)
-        return user
-
     def get_queryset(self):
-        return Follow.objects.filter(user=self._get_user())
+        user = get_object_or_404(User, username=self.request.user)
+        return Follow.objects.filter(user=user)
 
     def perform_create(self, serializer):
-        return serializer.save(user=self._get_user())
+        return serializer.save(user=self.request.user)
