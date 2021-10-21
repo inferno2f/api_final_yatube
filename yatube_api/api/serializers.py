@@ -37,12 +37,6 @@ class FollowSerializer(serializers.ModelSerializer):
         slug_field="username", queryset=User.objects.all()
     )
 
-    def validate_following(self, data):
-        user = self.context["request"].user
-        if user != data:
-            return data
-        raise serializers.ValidationError("You can't subscribe to yourself")
-
     class Meta:
         fields = "__all__"
         model = Follow
@@ -51,3 +45,9 @@ class FollowSerializer(serializers.ModelSerializer):
                 queryset=Follow.objects.all(), fields=("user", "following")
             )
         ]
+
+    def validate_following(self, data):
+        user = self.context["request"].user
+        if user != data:
+            return data
+        raise serializers.ValidationError("You can't subscribe to yourself")
